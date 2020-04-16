@@ -6,8 +6,8 @@
         inactive-text="禁止学生注册"
         active-color="#13ce66"
         inactive-color="#ff4949"
-        active-value="1"
-        inactive-value="0"
+        :active-value="1"
+        :inactive-value="0"
         @change="open">
     </el-switch>
   </el-card>
@@ -26,7 +26,7 @@
         methods: {
             isRegister() {
                 this.$http.get("/api/system").then(res => {
-                    this.register = res.data.register
+                    this.register = res.data.data.register
                 })
             },
             open() {
@@ -35,7 +35,10 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.post()
+                    this.$http.put("/api/system",{
+                        id: 1,
+                        register: this.register
+                    })
                 }).catch(() => {
                     this.$message({
                         type: 'info',

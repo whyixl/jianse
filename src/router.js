@@ -14,13 +14,13 @@ export const constantRouter = [
 
 export const asyncRouter = [
   {
-    path: "/topic",
+    path: "/dashboard",
     component: BasicLayout,
     children: [
       {
         path: "/",
-        name: "topic",
-        component: () => import("@/views/Topic.vue"),
+        name: "dashboard",
+        component: () => import("@/views/Dashboard.vue"),
         meta: { menuName: "概览" }
       }
     ]
@@ -30,9 +30,19 @@ export const asyncRouter = [
     component: BasicLayout,
     children: [
       {
-        path: "/system/profile",
-        name: "profile",
-        component: () => import("@/views/system/Profile.vue")
+        path: "/system/topic",
+        name: "topic",
+        component: () => import("@/views/system/Topic.vue")
+      },
+      {
+        path: "/system/score",
+        name: "score",
+        component: () => import("@/views/system/Score.vue")
+      },
+      {
+        path: "/system/notice",
+        name: "notice",
+        component: () => import("@/views/system/Notice.vue")
       },
       {
         path: "/system/user",
@@ -40,9 +50,30 @@ export const asyncRouter = [
         component: () => import("@/views/system/User.vue")
       },
       {
+        path: "/system/topicManager",
+        name: "topicManager",
+        component: () => import("@/views/system/TopicManager.vue")
+      },
+      {
+        path: "/system/profile",
+        name: "profile",
+        component: () => import("@/views/system/Profile.vue")
+      },
+      {
         path: "/system/setting",
         name: "setting",
         component: () => import("@/views/system/Setting.vue")
+      }
+    ]
+  },
+  {
+    path: "/authority",
+    component: BasicLayout,
+    children: [
+      {
+        path: "/authority/manager",
+        name: "manager",
+        component: () => import("@/views/authority/Manager.vue")
       }
     ]
   }
