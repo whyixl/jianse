@@ -32,7 +32,7 @@ export const asyncRouter = [
       {
         path: "/system/topic",
         name: "topic",
-        component: () => import("@/views/system/Topic.vue")
+        component: () => import("@/views/system/MyTopic.vue")
       },
       {
         path: "/system/score",

@@ -25,6 +25,8 @@ const subTree = (parentNode, allMenus) => {
 const store = new Vuex.Store({
   state: {
     token: null,
+    userName: null,
+    id: null,
     // 菜单列表
     menus: [],
     // 菜单树
@@ -101,6 +103,14 @@ const store = new Vuex.Store({
       localStorage.setItem("token", newToken);
       state.token = newToken;
     },
+    setId(state, id) {
+      localStorage.setItem("id", id);
+      state.id = id;
+    },
+    setUserName(state, userName) {
+      localStorage.setItem("userName", userName);
+      state.userName = userName;
+    },
     setMenus(state, menus) {
       state.menus = menus;
     },
@@ -126,6 +136,8 @@ const store = new Vuex.Store({
     },
     signOut(context) {
       localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("id");
       context.commit("setToken", null);
       context.commit("setMenus", []);
       context.commit("setAuthorities", []);

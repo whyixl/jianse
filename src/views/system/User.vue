@@ -47,14 +47,15 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" :align="'center'">
-          <template slot-scope="scope">
-            <el-button type="text" size="small" @click="edit()">编辑</el-button>
-            <el-button type="text" size="small" @click="remove()">禁用</el-button>
+          <template slot-scope="{row}">
+            <el-button type="text" size="small" @click="edit">编辑</el-button>
+            <el-button type="text" size="small" @click="remove(row.id)">禁用</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination :current-page="pager.current" :page-size="pager.size" :total="pager.total"
                      class="pagination text-right" :page-sizes="$store.state.paginationPageSizes"
+                     @size-change="sizeChange" @current-change="pageChange"
                      :layout="$store.state.paginationLayout"></el-pagination>
     </el-card>
 
@@ -70,7 +71,6 @@
                 phone: null,
                 name: null,
                 selectedRows: [],
-                bucketName: "public",
                 pager: {current: 1, size: 10, total: 0, records: []}
             };
         },
@@ -95,18 +95,30 @@
                 this.dialogVisible = true;
             },
             onSelectionChange(rows) {
-                this.selectedRows = rows.map(item => item.userId);
+                this.selectedRows = rows.map(item => item.id);
             },
-            remove() {
+            remove(id) {
                 this.$confirm("此操作将永久删除, 是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
                     type: "warning"
+                }).then(() => {
+                    this.$http.delete("/api/user/"+id)
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
                 });
             },
-            onRemoveFile(file) {
-                this.$http.delete(`/oss/remove/${this.bucketName}/${file.response}`);
-            }
+            pageChange(val) {
+                this.pager.current = val;
+                this.query()
+            },
+            sizeChange(val) {
+                this.pager.size = val;
+                this.query()
+            },
         }
     };
 </script>
