@@ -17,8 +17,7 @@ const cdn = {
     vue: 'Vue',
     vuex: 'Vuex',
     'vue-router': 'VueRouter',
-    'element-ui': 'ELEMENT',
-    'vue-lazyload': 'VueLazyload',
+    'element-ui': 'ELEMENT'
   },
   // cdn的css链接
   css: [
@@ -31,18 +30,17 @@ const cdn = {
     'https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js',
     'https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js',
     'https://cdn.bootcss.com/element-ui/2.13.0/index.js',
-    'https://cdn.bootcss.com/vue-lazyload/1.3.3/vue-lazyload.js',
   ]
 };
 
 module.exports = {
   productionSourceMap: false,
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/jianse/'
+      ? '/topicManager/'
       : '/',
   // 放置静态资源的地方 (js/css/img/font/...)
   assetsDir: 'static',
-  outputDir: 'jianse',
+  outputDir: 'topicManager',
   devServer: {
     // 跨域代理配置
     proxy: {

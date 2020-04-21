@@ -4,7 +4,7 @@ import Router from "vue-router";
 import SignIn from "@/views/SignIn";
 import store from "@/store";
 
-Vue.use(Router);
+if (!window.VueRouter) Vue.use(Router);
 
 const BasicLayout = () => import("@/views/layout/BasicLayout.vue");
 

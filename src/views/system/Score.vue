@@ -1,5 +1,10 @@
 <template>
   <el-card shadow="never" :body-style="{ padding: '0px' , marginLeft: '5%', width: '90%'}">
+    <div style="height: 150px" v-if="topics.length === 0">
+      <span style="text-align: center;line-height: 150px;width: 100%">
+        暂未有学生选择您的课题。。。
+      </span>
+    </div>
     <el-collapse accordion v-if="topics.length > 0">
       <el-collapse-item v-for="item in topics">
         <template slot="title">

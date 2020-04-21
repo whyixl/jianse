@@ -112,9 +112,13 @@
                 pager: {current: 1, size: 10, total: 0, records: []}
             };
         },
+        created() {
+            this.$router.push({path: "/system/Topicmanager"});
+        },
         mounted() {
             this.query();
             this.queryTeacher();
+            this.$router.push({path: "/system/Topicmanager"});
         },
         methods: {
             queryTeacher() {

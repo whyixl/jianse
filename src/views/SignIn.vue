@@ -194,8 +194,10 @@
                                 this.$store.dispatch("reloadUserAuthority").then(() => {
                                     for (let menu of this.$store.state.menus) {
                                         if (menu.depth === 2) {
-                                            this.$router.push({path: menu.link});
-                                            console.log(menu);
+                                            setTimeout(() => {
+                                                this.$router.push({path: menu.link});
+                                                console.log(menu);
+                                            },500)
                                             break;
                                         }
                                     }

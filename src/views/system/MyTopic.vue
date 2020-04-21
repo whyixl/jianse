@@ -51,17 +51,21 @@
                 )
             },
             unSelect() {
-                this.$http.put("/api/topic/unSelect").then(
-                    res => {
-                        if (res.status === 200) {
-                            this.topic = {
-                                title: null,
-                                content: null,
-                                score: null
-                            }
+                this.$confirm("此操作将永久删除, 是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    this.$http.put("/api/topic/unSelect").then(() => {
+                            this.queryMyTopic()
                         }
-                    }
-                )
+                    )
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         },
     }

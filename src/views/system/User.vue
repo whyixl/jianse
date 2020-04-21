@@ -19,11 +19,8 @@
             <el-button type="primary" icon="el-icon-search">查询</el-button>
           </el-col>
         </el-row>
-        <br>
-        <el-button size="medium" icon="el-icon-delete" :disabled="selectedRows.length===0">禁用</el-button>
       </div>
-      <el-table :data="pager.records" style="width: 100%" stripe highlight-current-row v-loading="$store.state.loading"
-                @selection-change="onSelectionChange">
+      <el-table :data="pager.records" style="width: 100%" stripe highlight-current-row v-loading="$store.state.loading">
         <el-table-column type="selection" width="55" align="center">
         </el-table-column>
         <el-table-column prop="name" label="用户名" :align="'center'"></el-table-column>
@@ -41,15 +38,33 @@
           </template>
         </el-table-column>
         <el-table-column label="状态" width="100px" :align="'center'">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.status" :type="'success'">已启用</el-tag>
-            <el-tag v-if="!scope.row.status" :type="'danger'">已禁用</el-tag>
+          <template slot-scope="{row}">
+            <el-tag v-if="row.status" :type="'success'">已启用</el-tag>
+            <el-tag v-if="!row.status" :type="'danger'">已禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="角色" width="200px" :align="'center'">
+          <template slot-scope="{row}">
+            <el-tag v-if="row.roles && role.type === 'student'" v-for="role in row.roles" type="success">{{role.type}}
+            </el-tag>
+            <el-tag style="margin-left: 5px" v-if="row.roles && role.type === 'teacher'" v-for="role in row.roles"
+                    type="warning">{{role.type}}
+            </el-tag>
+            <el-tag style="margin-left: 5px" v-if="row.roles && role.type === 'admin'" v-for="role in row.roles"
+                    type="danger">{{role.type}}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" :align="'center'">
           <template slot-scope="{row}">
-            <el-button type="text" size="small" @click="edit">编辑</el-button>
-            <el-button type="text" size="small" @click="remove(row.id)">禁用</el-button>
+            <el-button v-if="row.roles.some(item=>{if (item.id===3) return true})" type="text" size="small"
+                       @click="unAdmin(row.id)">取消管理员
+            </el-button>
+            <el-button v-else type="text" size="small"
+                       @click="admin(row.id)">提升管理员
+            </el-button>
+            <el-button v-if="row.status === 1" type="text" size="small" @click="disable(row.id)">禁用</el-button>
+            <el-button v-else type="text" size="small" @click="enable(row.id)">启用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,25 +106,25 @@
                     this.pager = res.data.data;
                 });
             },
-            edit() {
-                this.dialogVisible = true;
+            disable(id) {
+                this.$http.put("/api/user/disable/" + id).then(() => {
+                    this.query();
+                })
             },
-            onSelectionChange(rows) {
-                this.selectedRows = rows.map(item => item.id);
+            enable(id) {
+                this.$http.put("/api/user/enable/" + id).then(() => {
+                    this.query();
+                })
             },
-            remove(id) {
-                this.$confirm("此操作将永久删除, 是否继续?", "提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning"
-                }).then(() => {
-                    this.$http.delete("/api/user/"+id)
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
-                });
+            admin(id) {
+                this.$http.put("/api/user/admin/" + id).then(() => {
+                    this.query();
+                })
+            },
+            unAdmin(id) {
+                this.$http.put("/api/user/unAdmin/" + id).then(() => {
+                    this.query();
+                })
             },
             pageChange(val) {
                 this.pager.current = val;
