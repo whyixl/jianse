@@ -29,9 +29,6 @@
             <el-button class="float-right" type="warning" icon="el-icon-plus" @click="dialogVisible = true">新增
             </el-button>
           </el-col>
-          <el-col :span="6">
-            <el-button type="primary" icon="el-icon-search" @click="allTopic">查询</el-button>
-          </el-col>
         </el-row>
       </div>
       <el-table :data="pager.records" style="width: 100%" stripe highlight-current-row>
@@ -86,7 +83,9 @@
                 )
             },
             selected(topicId) {
-                this.$http.put("/api/topic/select/" + topicId)
+                this.$http.put("/api/topic/select/" + topicId).then(() => {
+                    this.allTopic();
+                });
             },
             allTopic() {
                 this.$http.post("/api/topic/all", {

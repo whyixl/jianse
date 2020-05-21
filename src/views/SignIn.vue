@@ -3,8 +3,11 @@
     <el-row style="margin-top: 120px;z-index: 1;">
       <el-col :offset="9" :span="6">
         <el-card class="login-box" v-loading="$store.state.loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-          <el-form :model="loginForm" :rules="loginRule" ref="login">
+          <el-form :model="loginForm" :rules="loginRule" ref="login" >
             <img :src="logo" class="hy_center" style="width: 200px">
+            <div style="text-align: center">
+              <span style="text-align: center;font-size: 20px;font-weight: 600">数据库课程设计选题系统</span>
+            </div>
             <el-form-item prop="name">
               <el-input type="text" v-model="loginForm.name" auto-complete="off" placeholder="请输入用户名..."
                         prefix-icon="el-icon-bell"></el-input>
@@ -148,7 +151,7 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入名称', trigger: 'blur'},
-                        {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'}
+                        {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
                     ],
                     phone: [
                         {required: true, validator: checkPhone, trigger: 'change'}

@@ -3,7 +3,7 @@
     <el-aside class="sidebar" v-bind:class="{'sidebar-collapse':isCollapse}">
       <el-header class="logo">
         <img src="@/assets/logo_.png" alt="logo">
-        <h1>课题管理系统</h1>
+        <span style="font-size: 14px;margin-left: 10px">数据库课程设计选题系统</span>
       </el-header>
       <el-menu :router="true" :default-active="$route.path" :collapse="isCollapse">
         <el-menu-item v-for="menu in this.$store.state.menuTree" :key="menu.menuId" :index="menu.link"
